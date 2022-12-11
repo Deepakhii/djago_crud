@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block title %} Records {% endblock %} 
+{% block body %}
+{% if mes %}
+    <div class="alert alert-primary" role="alert">
+        {{mes}}
+    </div>
+    {% endif %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Mobile</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Date Of Birth</th>
+      <th scope="col">Image</th>
+      <th scope="col">Time</th>
+      <th scope="col">Update</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in data %}
+    <tr>
+      <th scope="row">{{i.id}}</th>
+      <td>{{i.name}}</td>
+      <td>{{i.email}}</td>
+      <td>{{i.mobile}}</td>
+      <td>{{i.gender}}</td>
+      <td>{{i.dob}}</td>
+      <td><img src="../media/{{i.file}}" alt="Not found" width="100" height="50"></td>
+      {% comment %} <td><img src="{{MEDIA_URL}}{{i.file.url}}" alt="Not found" width="100" height="50"></td> {% endcomment %}
+      <td>{{i.time}}</td>
+      <td>
+        <form name='update' action=" {% url 'update' pk=i.id %} " method='post'>
+          {% csrf_token %}
+          <input class="btn btn-warning" type="submit" value="Update">
+        </form>
+      </td>
+      <td>
+         <form action=" {% url 'delete' pk=i.id %} " method='post'>
+          {% csrf_token %}
+          <input class="btn btn-danger" type="submit" value="Delete">
+        </form> 
+      </td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock body %}

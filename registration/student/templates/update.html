@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Update
+{% endblock title %}
+    
+
+{% block body %}
+
+<div class="container mx-auto" style="max-width: 400px;">
+    {% if mes %}
+      
+    <div class="alert alert-primary" role="alert">
+        {{mes}}
+    </div>
+    {% endif %}
+</div>
+<form action=" {% url 'updated' pk=data.id %} " method="post" enctype="multipart/form-data">
+
+ {% csrf_token %}
+    <div class="container mt-5">
+        <div class="row mb-2">
+            <div class="col">
+                <label for="">Name</label>
+                
+                <input type="text" value="{{data.name}}" class="form-control mt-2" name='name'>   
+            </div>
+            <div class="col">
+                <label for="">Email</label>
+                
+                <input type="email" value="{{data.email}}" class="form-control mt-2" name="email"> 
+            </div>
+            <div class="col">
+                <label for="">Mobile</label>
+                <input type="tel" value="{{data.mobile}}" class="form-control mt-2" name="mobile"> 
+            </div>
+            <div class="col">
+                
+                <label for="">Gender</label>
+                <select name="gender" class="form-control form-control mt-2" maxlength="1" id="gender">
+                    <option value="Male" selected>Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6">
+                <label for="">Image</label>
+                <img src="{{MEDIA_URL}}{{data.file.url}}" alt="Not found" width="100" height="50">
+                <input type="file" class="mt-2" name="file"> 
+            </div>
+            <div class="col-6">
+                <label for="">Date of Birth</label>  
+                <input type="date" value="{{data.dob|date:'Y-m-d'}}" class="mt-2" name="date">  
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-5"></div>
+
+            <div class="col-2">
+                <input class="btn btn-primary" type="submit" value="Update">
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock body %}
+    
